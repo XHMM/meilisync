@@ -35,7 +35,7 @@ class MySQL(Source):
     async def get_full_data(self, sync: Sync, size: int):
         conn = await asyncmy.connect(**self.kwargs)
         if sync.fields:
-            fields = ", ".join(f"{field} as {sync.fields[field] or field}" for field in sync.fields)
+            fields = ", ".join(f"`{field}` as `{sync.fields[field] or field}`" for field in sync.fields)
         else:
             fields = "*"
         async with conn.cursor(cursor=DictCursor) as cur:
